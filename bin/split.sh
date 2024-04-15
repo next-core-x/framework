@@ -4,7 +4,7 @@ set -e
 set -x
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-BASEPATH=$(cd `dirname $0`; cd ../src/; pwd)
+BASEPATH=$(cd `dirname $0`; cd ../pkg/; pwd)
 REPOS=$@
 
 function split()

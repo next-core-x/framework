@@ -1,0 +1,19 @@
+name: Go Static Analysis
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  golangci:
+    name: nilaway
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install nilaway
+        run: go install go.uber.org/nilaway/cmd/nilaway@latest
+
+      - name: nilaway
+        run: ~/go/bin/nilaway ./...
+        continue-on-error: true

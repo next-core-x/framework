@@ -9,15 +9,14 @@ type Demo struct {
 	xxx string
 }
 
-func TestNew(t *testing.T) {
-	di := new()
-	assert.Equal(t, di, &Container{
+func di() *Container {
+	return &Container{
 		dependencies: make(map[string]interface{}),
-	})
+	}
 }
 
 func TestRegister(t *testing.T) {
-	di := new()
+	di := di()
 	c := &Container{
 		dependencies: make(map[string]interface{}),
 	}
@@ -27,8 +26,21 @@ func TestRegister(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	di := new()
+	di := di()
 	demo := Demo{xxx: string("xxx")}
 	di.Register("test", demo)
 	assert.Equal(t, di.Get("test"), demo)
+}
+
+func TestRemove(t *testing.T) {
+	di := di()
+	demo := Demo{xxx: string("xxx")}
+	c := &Container{
+		dependencies: make(map[string]interface{}),
+	}
+	di.Register("test", demo)
+	assert.Equal(t, di.Get("test"), demo)
+	di.remove("test")
+	assert.Nil(t, di.Get("test"))
+	assert.Equal(t, di, c)
 }

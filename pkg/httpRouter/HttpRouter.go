@@ -2,25 +2,18 @@ package httpRouter
 
 import "net/http"
 
-type Router struct {
-	routes []*Route
-}
-
-type Handler struct {
-	ServeHTTP func(w http.ResponseWriter, r *http.Request)
-}
-
 func New() *Router {
 	return &Router{}
 }
 
-func (r *Router) Register(method, path string, handler http.Handler) {
+func (r *Router) Register(method, path string, handler Handler) *Router {
 	route := &Route{
 		Method:  method,
 		Path:    path,
 		Handler: handler,
 	}
 	r.routes = append(r.routes, route)
+	return r
 }
 
 func (r *Router) Match(req *http.Request) *Route {

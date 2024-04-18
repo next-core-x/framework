@@ -5,7 +5,7 @@ import "net/http"
 type Route struct {
 	Path    string
 	Method  string
-	Handler Handler
+	Handler *Handler
 }
 
 type Handler struct {
